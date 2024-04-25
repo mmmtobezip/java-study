@@ -5,6 +5,9 @@ public class Point {
 	private int x;
 	private int y;
 
+//	public Point() { //ColorPoint의 오류를 해결하기 위한 기본 생성자 -> 자식에서 super(x, y)로 해결 가능
+//		
+//	}
 	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
