@@ -18,14 +18,8 @@
   	<module>practice01</module>
   	<module>practice02</module>
   	<module>practice03</module>
-<<<<<<< HEAD
   	<module>chapter03</module>
   	<module>practice04</module>
   	<module>practice05</module>
-=======
-  	<module>practice04</module>
-  	<module>practice05</module>
-  	<module>chapter03</module>
->>>>>>> 1ad4d1ccdc7fa37f6dc024bca614772c0071c494
   </modules>
 </project>
