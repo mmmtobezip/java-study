@@ -29,5 +29,6 @@ public class TV {
 	
 	//채널은 2개 메서드 생성 
 	//하나는 int, 하나는 boolean 
+
 	
 }
