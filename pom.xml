@@ -17,6 +17,14 @@
   <modules>
   	<module>practice01</module>
   	<module>practice02</module>
+<<<<<<< HEAD
   	<module>practice03</module>
+  	<module>practice04</module>
+  	<module>practice05</module>
+  	<module>chapter03</module>
+=======
+  	<module>practice04</module>
+  	<module>practice05</module>
+>>>>>>> 58338f211ead7629fb86c134f9eb49a9fca86e80
   </modules>
 </project>
