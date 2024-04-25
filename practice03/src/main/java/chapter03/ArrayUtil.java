@@ -1,4 +1,4 @@
-package practice03;
+package chapter03;
 
 public class ArrayUtil {
 	public static double[] intToDobule(int[] a) {

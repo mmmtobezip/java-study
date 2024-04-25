@@ -46,12 +46,12 @@ public class ColorPoint extends Point {
 		this.color = color;
 	}
 	
-	@Override
-	public void show() { //Point override method -> 컴파일 하는 과정에서 오버라이드 메서드인지 체크하기 위해 @(Annotation)사용
-		//super.show(); //부모의 기능을 그대로 사용하되, 부분 재구현도 가능/아니면 아예 새로운 show() 구현도 가능
-		System.out.println("점(x=" + getX() + ", y=" + getY() + 
-							", color=" + color + ")을 그렸습니다.");
-		
-	}
+//	@Override
+//	public void show() { //Point override method -> 컴파일 하는 과정에서 오버라이드 메서드인지 체크하기 위해 @(Annotation)사용
+//		//super.show(); //부모의 기능을 그대로 사용하되, 부분 재구현도 가능/아니면 아예 새로운 show() 구현도 가능
+//		System.out.println("점(x=" + getX() + ", y=" + getY() + 
+//							", color=" + color + ")을 그렸습니다.");
+//		
+//	}
 
 }

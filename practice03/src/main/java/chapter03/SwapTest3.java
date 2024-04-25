@@ -1,4 +1,4 @@
-package practice03;
+package chapter03;
 
 import mypackage.Value;
 

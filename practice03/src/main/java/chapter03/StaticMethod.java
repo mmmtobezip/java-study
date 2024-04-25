@@ -1,4 +1,4 @@
-package practice03;
+package chapter03;
 
 public class StaticMethod {
 	int n; //인스턴스 변수
