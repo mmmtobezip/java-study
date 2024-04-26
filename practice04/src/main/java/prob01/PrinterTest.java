@@ -1,5 +1,6 @@
 package prob01;
 
+//Print클래스 만들어서 오버로딩하는 문제
 public class PrinterTest {
 
 	public static void main(String[] args) {

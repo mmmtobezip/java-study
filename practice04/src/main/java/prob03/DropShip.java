@@ -1,5 +1,7 @@
 package prob03;
 
+//리팩토링
+//자식-부모 extends, 
 public class DropShip{
 	// 현재 위치
 	private int x;

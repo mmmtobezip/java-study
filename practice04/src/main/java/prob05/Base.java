@@ -1,5 +1,6 @@
 package prob05;
 
+//수정x
 public class Base {
 	public void service(String state){
 		if( state.equals( "낮" ) ) {
