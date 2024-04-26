@@ -1,5 +1,7 @@
 package chapter04;
 
+import java.util.Objects;
+
 //기본적으로 Object를 상속받게함.(=부모) 
 public class Point {
 	private int x;
@@ -43,5 +45,22 @@ public class Point {
 	 * -동일하면 동질하다. 하지만 자료구조는 내용을 따짐. -> ==연산자를 사용할 수 없음. -> equals() 사용
 	 * 
 	 */
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y); //내용 기반 hashing
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Point other = (Point) obj;
+		return x == other.x && y == other.y;
+	}
 
 }
