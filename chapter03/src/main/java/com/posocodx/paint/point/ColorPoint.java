@@ -1,4 +1,4 @@
-package paint;
+package com.posocodx.paint.point;
 
 public class ColorPoint extends Point {
 	//다른 패키지내 Point를 상속하면, 에러가 나는걸 볼 수 있음

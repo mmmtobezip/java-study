@@ -1,4 +1,13 @@
-package paint;
+package com.poscodx.paint.main;
+
+import com.poscodx.paint.i.Drawable;
+import com.poscodx.paint.shape.Circle;
+import com.poscodx.paint.shape.Rectangle;
+import com.poscodx.paint.shape.Shape;
+import com.poscodx.paint.shape.Triangle;
+import com.poscodx.paint.text.GraphicText;
+import com.posocodx.paint.point.ColorPoint;
+import com.posocodx.paint.point.Point;
 
 // 도형 그리기 프로그램 본체 
 public class Main {

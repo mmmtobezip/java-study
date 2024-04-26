@@ -1,4 +1,6 @@
-package paint;
+package com.posocodx.paint.point;
+
+import com.poscodx.paint.i.Drawable;
 
 //실습 2 - 도형그리기 프로그램 
 public class Point implements Drawable {
