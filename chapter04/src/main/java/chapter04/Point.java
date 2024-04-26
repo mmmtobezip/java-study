@@ -45,7 +45,8 @@ public class Point {
 	 * -동일하면 동질하다. 하지만 자료구조는 내용을 따짐. -> ==연산자를 사용할 수 없음. -> equals() 사용
 	 * 
 	 */
-
+	
+	//동질성은 hashcode로 선검사 -> 같으면 내용 비교 -> equals()와 hashCode() 같이 쓰는 이유
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y); //내용 기반 hashing
@@ -62,5 +63,6 @@ public class Point {
 		Point other = (Point) obj;
 		return x == other.x && y == other.y;
 	}
+
 
 }
