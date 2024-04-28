@@ -1,20 +1,6 @@
 package prob03;
 
-//리팩토링
-//자식-부모 extends, 
-public class DropShip{
-	// 현재 위치
-	private int x;
-	private int y;
-
-	void move(int x, int y) {
-		/* 지정된 위치로 이동 */
-	}
-
-	void stop() {
-		/* 현재 위치에 정지 */
-	}
-	
+public class DropShip extends Util{
 	void load() {
 		/* 선택된 대상을 태운다.*/ 
 	}
