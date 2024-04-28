@@ -1,6 +1,7 @@
 package prob3;
 
-public class Prob2 {
+//practice03/prob06 비슷 
+public class Prob3 {
 	public static void main(String[] args) {
 		Bird bird01 = new Duck();
 		bird01.setName( "꽥꽥이" );

@@ -12,5 +12,10 @@ public abstract class Bird {
 	}
 	
 	public abstract void fly();
-	public abstract void sing(); //오버라이드, toString도 
+	public abstract void sing(); //오버라이드, toString()도 
+	
+    @Override
+    public String toString() {
+        return "새의 이름은 " + name + " 입니다.";
+    }
 }
