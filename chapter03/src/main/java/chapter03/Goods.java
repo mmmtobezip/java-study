@@ -29,11 +29,11 @@ public class Goods {
 	}
 
 	//1. 기본 생성자
-//	public Goods() {
-//////내부에선 클래스 이름 생략 가능 
-//////Goods.countOfGoods++; 이태릭체 = 클래스 변수 
-////countOfGoods++;
-//} 
+	//public Goods() {
+	//내부에선 클래스 이름 생략 가능
+	//Goods.countOfGoods++; 이태릭체 = 클래스 변수
+	//countOfGoods++;
+	//}
 
 	public String getName() {
 		return name;

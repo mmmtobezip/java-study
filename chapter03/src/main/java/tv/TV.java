@@ -2,33 +2,59 @@ package tv;
 
 public class TV {
 
-	private int volume; //0 ~ 100 유지
-	private int channel; //1 ~ 255 유지
-	private boolean power; //0 ~ 100 유지, 1씩 증감
+	private int volume; //0 ~ 100
+	private int channel; //1 ~ 255
+	private boolean power; //1씩 증감
 	
-	public TV(int volume, int channel, boolean power) { //1. 생성자 생성
+	public TV(int volume, int channel, boolean power) { //생성자
 		this.volume = volume;
 		this.channel = channel;
 		this.power = power;
 	}
 	
-	//setter, getter 생성x
-	//내용 출력
 	public void status() {
-		System.out.println("TV[power=on/off, channel=10, volume=100]"); 
-		//true, false가 아닌 on, off로 출력되게
-		//channel은 실제 보는 채널
-		//volume도 현재 볼륨 
+		System.out.println("TV[power=" + (power ? "on" : "off") +
+						   ", channel=" + channel +
+						   ", volume=" + volume + "]");
 	}
-	
-	//power는 on off
-	
-	//볼륨은 2개 메서드 생성
-	//하나는 int, 하나는 boolean
-	//범위에 맞춰 라운딩 
-	
-	//채널은 2개 메서드 생성 
-	//하나는 int, 하나는 boolean 
 
-	
+	public void power(boolean on) {
+		this.power = on;
+	}
+
+	public void channel(int channel) {
+		if(channel < 1) {
+			this.channel = 255;
+		} else if(channel > 255) {
+			this.channel = 1;
+		} else {
+			this.channel = channel;
+		}
+	}
+
+	public void channel(boolean up) {
+		if (up) {
+			channel(this.channel + 1);
+		} else {
+			channel(this.channel - 1);
+		}
+	}
+
+	public void volume(int volume) {
+		if(volume < 0) {
+			this.volume = 100;
+		} else if(volume > 100) {
+			this.volume = 0;
+		} else {
+			this.volume = volume;
+		}
+	}
+
+	public void volume(boolean up) {
+		if(up) {
+			volume(this.volume + 1);
+		} else {
+			volume(this.volume - 1);
+		}
+	}
 }
