@@ -1,5 +1,6 @@
 package prob2;
 
+//practice04/prob05 비슷 
 public class PhoneApp {
 
 	public static void main(String[] args) {
