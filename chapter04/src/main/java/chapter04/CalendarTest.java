@@ -6,7 +6,7 @@ import java.util.TimeZone;
 
 public class CalendarTest {
 	public static void main(String[] args) {
-		Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
 		
 		// 1. Locale
 		Locale aLocale = Locale.getDefault(Locale.Category.FORMAT); //ca 캘린더 타입에 따라 
@@ -15,5 +15,7 @@ public class CalendarTest {
 		//2. TimeZone : defaultTimeZone(aLocale);
 		TimeZone tz = TimeZone.getDefault();
 		//System.out.println(aLocale + ":" + tz);
+		
+		System.out.println(cal);
 	}
 }
