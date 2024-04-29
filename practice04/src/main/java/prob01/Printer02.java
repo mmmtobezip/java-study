@@ -21,7 +21,7 @@ public class Printer02 {
 	//public <T> void println() {
 	//}
 	
-	//2. T로 파라미터 받는 메서드 
+	//2. T로 파라미터 받는 메서드 - 한개만 받는
 	public <T> void println(T t) {
 		System.out.println(t);
 	}
@@ -32,4 +32,19 @@ public class Printer02 {
 	//	return t;
 	//}
 	
+	public int sum(Integer... nums) { //배열로 반환
+		int s = 0;
+		for(Integer n : nums) {
+			s += n;
+		}
+		
+		return s;
+	}
+	
+	// 제네릭 가변(여러개 받는) - 오버로딩
+	public <T> void println(T... ts) {
+		for(T t : ts) {
+		System.out.println(t);
+		}
+	}
 }
