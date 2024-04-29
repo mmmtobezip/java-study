@@ -1,22 +1,62 @@
 package prob5;
 
 public class MyStack {
-	private String[] stack;
-	private int top;
-	private int size = stack.length;
-	
-	public void push() {}
-	public void pop() {}
-	public boolean isEmpty() { //스택 비었는지 체크 
-		return top == -1;
-	}
-	public void resize() { //스택 가득찬 경우 2배 resize 
-		String[] newStack = new String[size*2];
-		for(int i = 0; i <= top; i++) {
-			newStack[i] = stack[i];
+		private int top;
+		private String[] buffer;
+
+		public MyStack(int capacity) {
+			top = -1;
+			buffer = new String[capacity];
 		}
-		stack = newStack;
-	} 
+
+		public void push(String s) {
+			if (top == buffer.length - 1) {
+				resize();
+			}
+
+			buffer[++top] = s;		
+		}
+
+		public String pop() throws MyStackException {
+			if (isEmpty()) {
+				throw new MyStackException("stack is empty");
+			}
+
+			String result = buffer[top];
+			buffer[top--] = null;
+
+			return result;
+		}
+
+		public boolean isEmpty() {
+			return top == -1;
+		}
+
+		private void resize() {
+			String[] temp = new String[buffer.length * 2];
+			for (int i = 0; i <= top; i++) {
+				temp[i] = buffer[i];
+			}
+
+			buffer = temp;
+		}
+	}
+//	private String[] stack;
+//	private int top;
+//	private int size = stack.length;
+//	
+//	public void push() {}
+//	public void pop() {}
+//	public boolean isEmpty() { //스택 비었는지 체크 
+//		return top == -1;
+//	}
+//	public void resize() { //스택 가득찬 경우 2배 resize 
+//		String[] newStack = new String[size*2];
+//		for(int i = 0; i <= top; i++) {
+//			newStack[i] = stack[i];
+//		}
+//		stack = newStack;
+//	} 
 	
 	//string이 들어오면 
 	//push()를 만들어서 넣고
@@ -31,4 +71,3 @@ public class MyStack {
 	//isEmpty()체크 
 	//top = -1 -> empty(), pop() -> 젤 위에 있는 값 꺼내기 
 	// 
-}
