@@ -1,5 +1,6 @@
 package structural.decorator;
 
+//FileInputStream/FileOutputStream과 같음
 public class ConcretComponent extends Component {
 
 	private String text; 

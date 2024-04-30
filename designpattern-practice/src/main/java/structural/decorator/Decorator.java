@@ -1,7 +1,8 @@
 package structural.decorator;
 
-//FilterInputStream과 같은 기능을 하는 (보조스트림, Decotrator)
-//즉, FilterInputstream은 Read를 구현할 수 x
+//FilterInputStream/FilterOutputStream과 같은 기능을 하는 (보조스트림, Decotrator)
+//즉, FilterInputstream은 추상이기에 read를 구현할 수 x
+//주스트림일수도 보조스트림일수도?
 public abstract class Decorator extends Component {
 
 	//abstract이기에 여기서 operation()을 구현할 수 없음. 단지 추상
