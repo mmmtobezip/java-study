@@ -35,7 +35,7 @@ public class FileReaderTest {
 				InputStreamCount++;
 			}
 			
-			System.out.println(""); //개행
+			System.out.println("");
 			System.out.println("count:" + InputStreamCount); //21번
 		} catch (FileNotFoundException e) {
 			System.out.println("file not found:" + e);
