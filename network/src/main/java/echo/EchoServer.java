@@ -89,5 +89,5 @@ public class EchoServer {
 	private static void log(String message) {
 		System.out.println("[EchoServer] " + message);
 	}
-	}
+}
 
