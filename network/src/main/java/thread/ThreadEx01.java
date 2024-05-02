@@ -9,15 +9,6 @@ public class ThreadEx01 {
 		
 		new DigitThread().start();
 		
-		//main thread로 돌리기
-		for(char c = 'a'; c <= 'j'; c++) {
-			System.out.print(c);
-			
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+
 	}
 }
