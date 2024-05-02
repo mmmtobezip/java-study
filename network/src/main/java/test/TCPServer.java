@@ -39,12 +39,13 @@ public class TCPServer {
 				
 				
 				while(true) {
+					System.out.println("try to read"); //이게 한 번 출력되면, socketexcpetion은 write()할 때 발생한 것 
 					//5. 데이터 읽기 - 소켓통신은 byte단위로 읽어들임
 					byte[] buffer = new byte[256];
 					int readByteCount = is.read(buffer); // 읽는 순간 blocking되기에 무한루프도 ok
 					
 					if(readByteCount == -1) { 
-						//클라이언트가 정상적으로 종료, 명시적으로 소켓이 close() 호출한 것 
+						//Connection Reset
 						System.out.println("[Server] closed by client");
 						break;
 					}
@@ -54,10 +55,22 @@ public class TCPServer {
 					
 					//6. 데이터 쓰기 - outputstream 활용
 					os.write(data.getBytes("UTF-8")); //string객체에서 byte를 꺼내오는 방법 getBytes()
+					
+					try {
+						Thread.sleep(3000); //종료될 때까지 기다림 -> 명시하고 close()과 같음
+					} catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+					//Abruptly case
+					//스레드 sleep을 해주고 아래 라인을 주석처리하면 socketexception 발생x -> readByteCount=-1로 된 것  
+					//66Line실행 시 socketexcpetion이 발생한건지
+					//readByteCount할때 socketexcpetion이 발생한건지 의문이 들 수 있음
+					os.write(data.getBytes("UTF-8"));
 				}
 				
 			} catch(SocketException e) { //통신중에 발생한 에러 
-				System.out.println("[Server] suddenly closed by client");
+				System.out.println("[Server] SocketException: " + e);
 			} catch(IOException e) {
 				System.out.println("[Server] error:" + e);
 			}finally {

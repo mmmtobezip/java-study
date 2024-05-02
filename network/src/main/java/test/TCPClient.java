@@ -31,7 +31,7 @@ public class TCPClient {
 			//5. 읽기
 			byte[] buffer = new byte[256];
 			int readByteCount = is.read(buffer);
-			if(readByteCount == -1) { //로직상 서버가 먼저 끊진 못함. 
+			if(readByteCount == -1) { //로직상 서버가 먼저 끊진 못함. -> 정상적인 종료 시 아래 에러
 				System.out.println("[Client] closed by Server");
 				return; //종료시킴
 			}
