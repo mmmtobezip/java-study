@@ -40,7 +40,7 @@ public class TCPClient {
 			data = new String(buffer, 0, readByteCount, "UTF-8"); //Line40 -> 보조스트림인 InputStreamReader에게 맡기면 된다. (경계가 없는걸 "\n개행"을 붙여 보낸다.) 읽을 땐 개행 제외 bufferedReader로 읽기 
 			System.out.println("[Client] received:" + data);
 		} catch (SocketException e) {
-			System.out.println("[Client] suddenly closed by Server");
+			System.out.println("[Client] Socket Exception : " + e);
 		}  catch (IOException e) {
 			System.out.println("[Client] error:" + e);
 		} finally {

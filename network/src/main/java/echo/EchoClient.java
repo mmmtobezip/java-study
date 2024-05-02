@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 
 public class EchoClient {
@@ -37,14 +38,16 @@ public class EchoClient {
 				pw.println(line); // 개행을 붙여서 서버에 보냄
 				String data = br.readLine(); //blocking
 				if(data == null) { //서버와 연결 끊김
-					log("suddenly closed by server"); 
+					log("closed by server"); 
 					break;
 				}
 				
 				//클라가 보낸 데이터가 제대로 다시 돌아온 것
 				System.out.println("<<" + data);
 			}
-		} catch(IOException e) {
+		} catch (SocketException e) {
+			System.out.println("[Client] Socket Exception: " + e);
+		}  catch(IOException e) {
 			log("error:" + e);
 		} finally {
 			try {

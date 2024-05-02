@@ -60,7 +60,7 @@ public class EchoServer {
 					pw.println(data);
 				}
 			} catch(SocketException e) { 
-				log("suddenly closed by client");
+				log("Socket Exception :" + e);
 			} catch(IOException e) {
 				log("error:" + e);
 			}finally {
