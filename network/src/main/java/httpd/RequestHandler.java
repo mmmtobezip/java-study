@@ -107,7 +107,7 @@ public class RequestHandler extends Thread {
 		outputStream.write(body); //body내용을 byte로 뿌리기
 	}
 
-	//회원가입누를때 400나와야되고 
+	//회원 가입 누를 때 400
 	private void response400Error(OutputStream outputStream, String protocol) throws IOException {
 		String url = "/error/400.html";
 		File file = new File(DOCUMENT_ROOT + url);
@@ -119,7 +119,7 @@ public class RequestHandler extends Thread {
 		outputStream.write(body);
 	}
 
-	//로그인누를때 404
+	//로그인 누를 때 404
 	private void response404Error(OutputStream outputStream, String protocol) throws IOException {
 		String url = "/error/404.html";
 		File file = new File(DOCUMENT_ROOT + url);
