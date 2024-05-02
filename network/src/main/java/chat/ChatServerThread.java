@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -19,12 +20,12 @@ import java.util.List;
 public class ChatServerThread extends Thread {
 	private String nickname;
 	private Socket socket;
-	private List<PrintWriter> listWriters;
+	private List<Writer> listWriters;
 	
 	BufferedReader br = null;
 	PrintWriter pw = null;
 
-	public ChatServerThread(Socket socket, List<PrintWriter> listWriters) { //소켓 생성자 
+	public ChatServerThread(Socket socket, List<Writer> listWriters) { //소켓 생성자 
 		this.socket = socket;
 		this.listWriters = listWriters;
 	}
@@ -97,33 +98,34 @@ public class ChatServerThread extends Thread {
 		
 	}
 	
-	private void doJoin(String nickName, PrintWriter printWriter) {
+	private void doJoin(String nickName, Writer writer) {
 		this.nickname = nickName;
 		String message = nickName + "님이 참여하였습니다.";
 		//A유저가 채팅방 입장 시, 다른 유저들에게 000님이 참여하였습니다. 라는 메시지를 보내는게 브로드캐스팅 
 		broadCastMsg(message);
 		
 		//writer pool에 저장 
-		addWriter(printWriter);
+		addWriter(writer);
 		
 		//ack를 보내 유저들의 채팅방 참여가 성공적이라는 것을 클라이언트에게 알려주는 용도 
 		//ack
-		printWriter.println("join:ok");
+		pw.println("join:ok"); //check!!
 //		printWriter.flush();
 	}
 	
-	private void addWriter(PrintWriter printWriter) {
+	private void addWriter(Writer writer) {
 		 //list타입의 writer pool에 파라미터로 받은 PrintWriter추가 
 		synchronized(listWriters) { //synchronized()는 여러 스레드가 하나의 공유 객체에 접근할 때 동기화 보장 
-			listWriters.add(printWriter);
+			listWriters.add(writer);
 		}
 	}
 	
 	private void broadCastMsg(String message) {
 		synchronized(listWriters) {
-			for(PrintWriter writer : listWriters) {
-				writer.println(message);
-				writer.flush();
+			for(Writer writer : listWriters) {
+				PrintWriter printWriter = (PrintWriter) writer;
+				printWriter.println(message);
+				printWriter.flush();
 			}
 		}
 	}
@@ -133,11 +135,11 @@ public class ChatServerThread extends Thread {
 		broadCastMsg(nickname + ":" + message);	
 	} 
 	
-	private void doQuit(PrintWriter printWriter) {
+	private void doQuit(Writer writer) {
 		//프로토콜: "quit"
 		//000님이 퇴장 하였습니다. 라는 메시지가 브로드캐스팅 되어야 한다
 		//현재 스레드의 printWriter를 writer pool에서 제고한 후, 브로드캐스팅 하면됨 
-		removeWriter(printWriter);
+		removeWriter(writer);
 		
 		if(nickname != null) {
 			String message = nickname + "님이 퇴장 하였습니다.";
@@ -145,10 +147,10 @@ public class ChatServerThread extends Thread {
 		}
 	}
 	
-	private void removeWriter(PrintWriter printWriter) {
+	private void removeWriter(Writer writer) {
 		//list타입의 writer pool에 파라미터로 받은 PrintWriter 삭제
 		synchronized(listWriters) {
-			listWriters.remove(printWriter);
+			listWriters.remove(writer);
 		}
 	}
 }

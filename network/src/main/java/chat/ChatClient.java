@@ -50,12 +50,18 @@ public class ChatClient {
 				//System.out.print(">>");
 				String data = sc.nextLine();
 				
-				if(data.equals("quit")) {
-					//8. quit 프로토콜 처리 
+//				if(data.equals("quit")) {
+//					//8. quit 프로토콜 처리 
+//					pw.println("quit");
+//					break;
+//				} else if(data.equals("message")) {
+//					//9. message 프로토콜 처리 
+//					pw.println("message:" + data);
+//				}
+				if("quit".equals(data)) {
 					pw.println("quit");
 					break;
-				} else if(data.equals("message")) {
-					//9. message 프로토콜 처리 
+				} else {
 					pw.println("message:" + data);
 				}
 			}	

@@ -35,7 +35,8 @@ public class ChatClientThread extends Thread {
 				if(message == null) {
 					break;
 				}
-				ChatClient.log(message);
+				System.out.println(message);
+				//ChatClient.log(message);
 			}
 		} catch(SocketException e) { 
 			ChatClient.log("Socket Exception :" + e);
