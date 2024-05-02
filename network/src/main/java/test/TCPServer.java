@@ -39,7 +39,7 @@ public class TCPServer {
 				
 				
 				while(true) {
-					System.out.println("try to read"); //이게 한 번 출력되면, socketexcpetion은 write()할 때 발생한 것 
+					//System.out.println("try to read"); 이게 한 번 출력되면, socketexcpetion은 write()할 때 발생한 것 
 					//5. 데이터 읽기 - 소켓통신은 byte단위로 읽어들임
 					byte[] buffer = new byte[256];
 					int readByteCount = is.read(buffer); // 읽는 순간 blocking되기에 무한루프도 ok
@@ -66,7 +66,7 @@ public class TCPServer {
 					//스레드 sleep을 해주고 아래 라인을 주석처리하면 socketexception 발생x -> readByteCount=-1로 된 것  
 					//66Line실행 시 socketexcpetion이 발생한건지
 					//readByteCount할때 socketexcpetion이 발생한건지 의문이 들 수 있음
-					os.write(data.getBytes("UTF-8"));
+					//os.write(data.getBytes("UTF-8"));
 				}
 				
 			} catch(SocketException e) { //통신중에 발생한 에러 
