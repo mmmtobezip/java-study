@@ -16,6 +16,9 @@ public class TCPServer {
 			//1. Create ServerSocket
 			serverSocket = new ServerSocket(); 
 			
+			//1.1 FIN_WAIT2 -> TIME_WAIT 상태에서도 소켓 포트 할당이 가능하도록 하기 위해 
+			serverSocket.setReuseAddress(true); 
+			
 			//2. Binding - Socket에 InetSocketAddress[InetAddress(IpAddress + Port = 객체]를 바인딩 
 			//serverSocket.bind(new InetSocketAddress("127.0.0.1", 5000), 10); //"127.0.0.1"와 같이 특정 호스트 IP 대역을 바인딩 하는걸 지양
 			serverSocket.bind(new InetSocketAddress("0.0.0.0", 5000), 10); //"": ip, 5000: port, 10: 대기 백로그 queue size
@@ -53,6 +56,13 @@ public class TCPServer {
 					String data = new String(buffer, 0, readByteCount, "UTF-8"); //encoding, 256을 다 하는게 아니라 limit(readByteCount)을 정해줌
 					System.out.println("[Server] received:" + data);
 					
+					//SO_TIMEOUT 테스트 - 서버는 응답을 받고 3초간 sleep() 후 클라에게 응답 - > 실패 유도(blocking되는 read()쪽에서 사용가능)
+//					try {
+//						Thread.sleep(3000);
+//					} catch (InterruptedException e) {
+//						
+//						e.printStackTrace();
+//					}
 					//6. 데이터 쓰기 - outputstream 활용
 					os.write(data.getBytes("UTF-8")); //string객체에서 byte를 꺼내오는 방법 getBytes()
 					
