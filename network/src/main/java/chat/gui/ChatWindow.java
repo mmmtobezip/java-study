@@ -27,7 +27,7 @@ public class ChatWindow {
 	private Socket socket;
 
 	//1. 소켓 추가 필요 
-	public ChatWindow(String name, Socket socket) {
+	public ChatWindow(String name) {
 		frame = new Frame(name); //윈도우 프레임, 윈도우창의 가장 바깥창 = 타이틀 
 		pannel = new Panel();  //buttonSend + textField를 위한 위젯 
 		buttonSend = new Button("Send");

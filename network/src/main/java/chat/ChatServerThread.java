@@ -22,10 +22,10 @@ public class ChatServerThread extends Thread {
 	private Socket socket;
 	private List<Writer> listWriters;
 	
-	BufferedReader br = null;
-	PrintWriter pw = null;
-
-	public ChatServerThread(Socket socket, List<Writer> listWriters) { //소켓 생성자 
+	private BufferedReader br;
+	private PrintWriter pw;
+                 
+	public ChatServerThread(Socket socket, List<Writer> listWriters) { 
 		this.socket = socket;
 		this.listWriters = listWriters;
 	}
@@ -33,11 +33,12 @@ public class ChatServerThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			//1. Remote Host Info
+			//1. Remote Host Information
 			InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress)socket.getRemoteSocketAddress();
 			String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
 			int remotePort = inetRemoteSocketAddress.getPort(); 
-			ChatServer.log("connected by client[" + remoteHostAddress + ":" + remotePort + "]");
+			
+			ChatServer.log("Connected by Client[" + remoteHostAddress + ":" + remotePort + "]");
 			
 			//2. Get IO Stream 
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
@@ -48,34 +49,20 @@ public class ChatServerThread extends Thread {
 				String request = br.readLine();
 				
 				if(request == null) {
-					//doQuit(pw); //로그 찍은 다음에 클라이언트가 "quit" 보내지 않고 소켓을 닫은 경우에 대한 에러 처리가 필요한가?
-					ChatServer.log("closed by client");
 					doQuit(pw);
-					break; 
+					ChatServer.log("Closed by Client");
+					break;
 				}
-				ChatServer.log("[ChatServerThread recevied: " + request);
+				
+				ChatServer.log("[ChatServerThread recevied=> " + request + "]");
 				
 				//4. 프로토콜 구현
-				//조건에 따라 scanner로 받아서 
-				//처음 유저가 입장하면 "join: " + scanner
-				//유저가 입력한게 "quit: " + scanner이면 종료
-				//else "message: " + scanner면, 파싱해서 데이터를 그대로 보여주기
 				String[] tokens = request.split(":");
-//				if(tokens[0].equals("join")) {
-//					doJoin(tokens[1], pw);
-//				} else if(tokens[0].equals("message")) {
-//					doMessage(tokens[1]);
-//				} else if(tokens[0].equals("quit")) {
-//					doQuit(pw);
-//					break;
-//				} else {
-//					ChatServer.log("Error: 알 수 없는 요청(" + tokens[0] + ")");
-//				}
-				if("join".equals(tokens[0])) {
+				if(("join").equals(tokens[0])) {
 					doJoin(tokens[1], pw);
-				} else if ("message".equals(tokens[0])) {
+				} else if(("message").equals(tokens[0])) {
 					doMessage(tokens[1]);
-				} else if ("quit".equals(tokens[0])) {
+				} else if(("quit").equals(tokens[0])) {
 					doQuit(pw);
 					break;
 				} else {
@@ -83,9 +70,9 @@ public class ChatServerThread extends Thread {
 				}
 			}
 		} catch(SocketException e) {
-			ChatServer.log("Socket Exception: " + e); //퇴장처리(?)
+			ChatServer.log("Socket Exception: " + e);
 		} catch(IOException e) {
-			ChatServer.log("error: " + e);
+			ChatServer.log("Error: " + e);
 		} finally {
 			try {
 				if(socket != null && !socket.isClosed()) {
@@ -101,20 +88,18 @@ public class ChatServerThread extends Thread {
 	private void doJoin(String nickName, Writer writer) {
 		this.nickname = nickName;
 		String message = nickName + "님이 참여하였습니다.";
-		//A유저가 채팅방 입장 시, 다른 유저들에게 000님이 참여하였습니다. 라는 메시지를 보내는게 브로드캐스팅 
+		System.out.println(message);
+
 		broadCastMsg(message);
 		
 		//writer pool에 저장 
 		addWriter(writer);
 		
-		//ack를 보내 유저들의 채팅방 참여가 성공적이라는 것을 클라이언트에게 알려주는 용도 
 		//ack
-		pw.println("join:ok"); //check!!
-//		printWriter.flush();
+		pw.println("join:ok"); 
 	}
 	
 	private void addWriter(Writer writer) {
-		 //list타입의 writer pool에 파라미터로 받은 PrintWriter추가 
 		synchronized(listWriters) { //synchronized()는 여러 스레드가 하나의 공유 객체에 접근할 때 동기화 보장 
 			listWriters.add(writer);
 		}
@@ -125,20 +110,17 @@ public class ChatServerThread extends Thread {
 			for(Writer writer : listWriters) {
 				PrintWriter printWriter = (PrintWriter) writer;
 				printWriter.println(message);
-				printWriter.flush();
 			}
 		}
 	}
 	
 	private void doMessage(String message) {
-		//프로토콜: "message:하이^^;\n"
+		//protocol: "message:하이^^;\n"
 		broadCastMsg(nickname + ":" + message);	
 	} 
 	
 	private void doQuit(Writer writer) {
-		//프로토콜: "quit"
-		//000님이 퇴장 하였습니다. 라는 메시지가 브로드캐스팅 되어야 한다
-		//현재 스레드의 printWriter를 writer pool에서 제고한 후, 브로드캐스팅 하면됨 
+		//protocol: "quit"
 		removeWriter(writer);
 		
 		if(nickname != null) {
@@ -148,7 +130,6 @@ public class ChatServerThread extends Thread {
 	}
 	
 	private void removeWriter(Writer writer) {
-		//list타입의 writer pool에 파라미터로 받은 PrintWriter 삭제
 		synchronized(listWriters) {
 			listWriters.remove(writer);
 		}
