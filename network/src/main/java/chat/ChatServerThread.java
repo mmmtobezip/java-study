@@ -64,7 +64,6 @@ public class ChatServerThread extends Thread {
 					doQuit(pw);
 					break;
 				} else {
-					//throw new UnknownError("Error: 알 수 없는 요청(" + tokens[0] + ")");
 					ChatServer.log("Error: 알 수 없는 요청(" + tokens[0] + ")");
 				}
 			}
