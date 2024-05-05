@@ -13,7 +13,6 @@ public class ChatClientThread extends Thread {
 		this.socket = socket;
 	}
 	
-	//키보드에 들어오는 출력만
 	@Override
 	public void run() {
 	     /* reader를 통해 읽은 데이터 콘솔에 출력하기 (message 처리) */	
@@ -33,6 +32,7 @@ public class ChatClientThread extends Thread {
 			ChatClient.log("Error:" + e);
 		}finally {
 			try {
+				//Closed socket 
 				if(socket != null && !socket.isClosed()) {
 					socket.close();
 				}

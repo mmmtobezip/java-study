@@ -33,16 +33,13 @@ public class ChatClient {
 			System.out.print("닉네임>>");
 			String input = sc.nextLine();
 			pw.println("join:" + input);
-			//"join:mango" 
-			//input: mango 
 			
-			
-			//String nickName = br.readLine();
-			if(("join:ok").equals(input)) {
-				System.out.println("님이 입장하였습니다. 즐거운 채팅 되세요.");
+			String response = br.readLine();
+			if(response.startsWith("join:ok")) {
+				System.out.println(input + "님이 입장하였습니다. 즐거운 채팅 되세요.");
 			}
 			
-			//6. ChatClientReceiveThread 시작 
+			//6. Create ChatClientReceiveThread
 			new ChatClientThread(socket).start();
 			
 			//7. 키보드 입력
@@ -66,11 +63,15 @@ public class ChatClient {
 				if(socket != null && !socket.isClosed()) {
 					socket.close();
 				}
+				if(sc != null) {
+					sc.close();
+				}
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
+	
 	public static void log(String message) {
 		System.out.println("[Chat Client]: " + message);
 	}

@@ -9,7 +9,6 @@ import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -66,6 +65,7 @@ public class ChatServerThread extends Thread {
 					doQuit(pw);
 					break;
 				} else {
+					//throw new UnknownError("Error: 알 수 없는 요청(" + tokens[0] + ")");
 					ChatServer.log("Error: 알 수 없는 요청(" + tokens[0] + ")");
 				}
 			}
@@ -75,6 +75,7 @@ public class ChatServerThread extends Thread {
 			ChatServer.log("Error: " + e);
 		} finally {
 			try {
+				//Closed socket 
 				if(socket != null && !socket.isClosed()) {
 					socket.close();
 				}
@@ -88,19 +89,15 @@ public class ChatServerThread extends Thread {
 	private void doJoin(String nickName, Writer writer) {
 		this.nickname = nickName;
 		String message = nickName + "님이 참여하였습니다.";
-		System.out.println(message);
-
+		ChatServer.log(message);
+		
 		broadCastMsg(message);
-		
-		//writer pool에 저장 
 		addWriter(writer);
-		
-		//ack
 		pw.println("join:ok"); 
 	}
 	
 	private void addWriter(Writer writer) {
-		synchronized(listWriters) { //synchronized()는 여러 스레드가 하나의 공유 객체에 접근할 때 동기화 보장 
+		synchronized(listWriters) {
 			listWriters.add(writer);
 		}
 	}
@@ -124,7 +121,7 @@ public class ChatServerThread extends Thread {
 		removeWriter(writer);
 		
 		if(nickname != null) {
-			String message = nickname + "님이 퇴장 하였습니다.";
+			String message = nickname + "님이 퇴장하였습니다.";
 			broadCastMsg(message);	
 		}
 	}
@@ -135,5 +132,4 @@ public class ChatServerThread extends Thread {
 		}
 	}
 }
-
 	

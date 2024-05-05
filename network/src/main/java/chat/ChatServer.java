@@ -1,13 +1,10 @@
 package chat;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,25 +21,22 @@ public class ChatServer {
 		ServerSocket serverSocket = null; 
 		
 		try {
-			//1. Create ServerSocket
+			//1. Create serverSocket 
 			serverSocket = new ServerSocket();
-			//serverSocket.setReuseAddress(true);
-			
 			//2. Binding 
 			serverSocket.bind(new InetSocketAddress(SERVER_IP, PORT), 10); 
 			log("Connected by Client[" + SERVER_IP + ":" + PORT + "]");
 			
-			
 			//3. Connection 
 			while(true) {
-				Socket socket = serverSocket.accept(); //blocking
+				Socket socket = serverSocket.accept(); 
 				new ChatServerThread(socket, listWriters).start();
 			}
 		} catch(IOException e) {
 			log("Error: " + e);
 			} finally {
 				try {
-					//Close ServerSocket
+					//Closed serverSocket 
 					if(serverSocket != null && !serverSocket.isClosed()) { 
 						serverSocket.close(); 
 					}
