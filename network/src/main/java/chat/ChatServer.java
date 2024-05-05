@@ -1,7 +1,7 @@
 package chat;
 
 import java.io.IOException;
-import java.io.Writer;
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,7 +17,7 @@ public class ChatServer {
 	public static final String SERVER_IP = "127.0.0.1";
 	
 	public static void main(String[] args) {
-		List<Writer> listWriters = new ArrayList<Writer>(); 
+		List<PrintWriter> listWriters = new ArrayList<>(); 
 		ServerSocket serverSocket = null; 
 		
 		try {

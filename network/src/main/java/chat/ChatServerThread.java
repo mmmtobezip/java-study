@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -19,12 +18,12 @@ import java.util.List;
 public class ChatServerThread extends Thread {
 	private String nickname;
 	private Socket socket;
-	private List<Writer> listWriters;
+	private List<PrintWriter> listWriters;
 	
 	private BufferedReader br;
 	private PrintWriter pw;
                  
-	public ChatServerThread(Socket socket, List<Writer> listWriters) { 
+	public ChatServerThread(Socket socket, List<PrintWriter> listWriters) { 
 		this.socket = socket;
 		this.listWriters = listWriters;
 	}
@@ -86,7 +85,7 @@ public class ChatServerThread extends Thread {
 		
 	}
 	
-	private void doJoin(String nickName, Writer writer) {
+	private void doJoin(String nickName, PrintWriter writer) {
 		this.nickname = nickName;
 		String message = nickName + "님이 참여하였습니다.";
 		ChatServer.log(message);
@@ -96,7 +95,7 @@ public class ChatServerThread extends Thread {
 		pw.println("join:ok"); 
 	}
 	
-	private void addWriter(Writer writer) {
+	private void addWriter(PrintWriter writer) {
 		synchronized(listWriters) {
 			listWriters.add(writer);
 		}
@@ -104,9 +103,8 @@ public class ChatServerThread extends Thread {
 	
 	private void broadCastMsg(String message) {
 		synchronized(listWriters) {
-			for(Writer writer : listWriters) {
-				PrintWriter printWriter = (PrintWriter) writer;
-				printWriter.println(message);
+			for(PrintWriter writer : listWriters) {
+				writer.println(message);
 			}
 		}
 	}
@@ -116,7 +114,7 @@ public class ChatServerThread extends Thread {
 		broadCastMsg(nickname + ":" + message);	
 	} 
 	
-	private void doQuit(Writer writer) {
+	private void doQuit(PrintWriter writer) {
 		//protocol: "quit"
 		removeWriter(writer);
 		
@@ -126,7 +124,7 @@ public class ChatServerThread extends Thread {
 		}
 	}
 	
-	private void removeWriter(Writer writer) {
+	private void removeWriter(PrintWriter writer) {
 		synchronized(listWriters) {
 			listWriters.remove(writer);
 		}
