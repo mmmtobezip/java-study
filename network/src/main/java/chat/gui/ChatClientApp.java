@@ -1,33 +1,61 @@
 package chat.gui;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 
+import chat.ChatServer;
+
 public class ChatClientApp {
-
 	public static void main(String[] args) {
+		Socket socket = null;
 		String name = null;
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = null; 
 
-		while( true ) {
+		try {
+			scanner = new Scanner(System.in);
 			
-			System.out.println("대화명을 입력하세요.");
-			System.out.print(">>> ");
-			name = scanner.nextLine();
-			
-			if (!name.isEmpty()) { 
-				break;
+			while(true) {
+				System.out.println("대화명을 입력하세요.");
+				System.out.print(">>> ");
+				name = scanner.nextLine();
+				
+				if (name != null && !name.isEmpty()) { 
+					break;
+				}
+				System.out.println("대화명은 한글자 이상 입력해야 합니다.\n");
 			}
 			
-			System.out.println("대화명은 한글자 이상 입력해야 합니다.\n");
+			//2. Create socket
+			socket = new Socket();
+			//3. Connection
+			socket.connect(new InetSocketAddress(ChatServer.SERVER_IP, ChatServer.PORT));
+			//4. Read/Write
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
+			
+			pw.println("join:" + name);
+			
+			String data = br.readLine();
+			if(("join:ok").equals(data)) {
+				//Create Thread
+				new ChatWindow(name, socket, br, pw).show(); 
+			}
+		} catch (SocketException e) {
+			log("SocketException: " + e);
+		} catch (IOException e) {
+			log("Error: " + e);
+		} finally {
+			scanner.close();
 		}
-		
-		scanner.close();
-
-		new ChatWindow(name).show(); //채팅 열기 -> 윈도우창 뜰 예정, 즉 ChatClientApp에서 join 프로토콜 미리 하고 show() 
-		/*
-		 * name뿐만 아니라 socket도 넘겨야함. new ChatWindow(name, socket).show();
-		 * name을 넘기는 이유는, 윈도우 타이틀에 둘리라고 넣기 위함
-		 * 해당 클래스에서 소켓 열고, join이 완료되면 채팅창을 하나 띄워야함.  -> 소켓으로 이미 통신끝남 
-		 */
 	}
-
+	
+	private static void log(String message) {
+		System.out.println("[ChatClientApp]: " + message);
+	}
 }
